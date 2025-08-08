@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RR Strength</title>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#111111" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <style>
+    :root { --bg:#f7f7f8; --card:#fff; --ink:#111; --muted:#6b7280; --border:#e5e7eb; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji; background: var(--bg); color: var(--ink); }
+    .container { max-width: 640px; margin: 0 auto; padding: 0 16px 96px; }
+    header { position: sticky; top: 0; background: rgba(247,247,248,.8); backdrop-filter: blur(6px); border-bottom: 1px solid var(--border); }
+    .hpad { padding: 12px 0; }
+    h1 { font-size: 20px; margin: 0 0 4px; }
+    .muted { color: var(--muted); font-size: 12px; }
+    .row { display: flex; gap: 8px; align-items: center; }
+    .grow { flex: 1; }
+    button, input, textarea, select { font: inherit; }
+    .btn { height: 36px; padding: 0 12px; border: 1px solid var(--border); background: #fff; border-radius: 12px; }
+    .btn.primary { background: #111; color: #fff; border-color: #111; }
+    .tabs { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; padding: 8px 0 12px; }
+    .tab { height: 40px; border: 1px solid var(--border); border-radius: 12px; background: #fff; font-size: 11px; line-height: 1.1; }
+    .tab.active { background: #111; color: #fff; border-color: #111; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 12px; margin: 10px 0; }
+    .ex-head { display: flex; justify-content: space-between; align-items: baseline; }
+    .ex-name { font-weight: 600; font-size: 14px; }
+    .ex-sub { font-size: 12px; color: var(--muted); }
+    .set-row { display: flex; gap: 6px; margin-top: 8px; }
+    .check { width: 34px; height: 34px; border-radius: 12px; border: 1px solid var(--border); background: #fff; }
+    .check.done { background: #111; color: #fff; border-color: #111; }
+    .grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 8px; }
+    .input { height: 38px; border: 1px solid var(--border); border-radius: 10px; padding: 0 10px; font-size: 14px; }
+    textarea.input { height: 80px; padding: 8px 10px; }
+    footer.install { position: fixed; bottom: 0; left: 0; right: 0; }
+    .bar { max-width: 640px; margin: 0 auto; padding: 8px 16px 16px; }
+    .bar > div { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 10px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container hpad">
+      <h1>Upper/Lower 4‑Day Strength & Hypertrophy</h1>
+      <div class="muted">Progressive overload • Rest 2–3m compounds, 45–90s accessories</div>
+      <div class="row" style="margin-top:8px;">
+        <div class="row">
+          <button id="prevWeek" class="btn">−</button>
+          <div id="weekLabel" class="btn" style="pointer-events:none;">Week 1</div>
+          <button id="nextWeek" class="btn">＋</button>
+        </div>
+        <div class="grow"></div>
+        <button id="resetDay" class="btn">Reset day</button>
+        <button id="resetWeek" class="btn">Reset week</button>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-tab="0">Day 1<br/>Upper (Push)</button>
+        <button class="tab" data-tab="1">Day 2<br/>Lower (Glute)</button>
+        <button class="tab" data-tab="2">Day 3<br/>Upper (Pull)</button>
+        <button class="tab" data-tab="3">Day 4<br/>Lower (Strength)</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="dayMeta" class="card">
+      <div class="ex-name" id="dayTitle"></div>
+      <div class="ex-sub" id="dayFocus"></div>
+    </div>
+
+    <div class="card">
+      <div class="ex-name">Warm-up</div>
+      <ul class="ex-sub">
+        <li>5–10 min light cardio</li>
+        <li>Dynamic mobility for joints involved</li>
+        <li>2–3 ramp-up sets for first compound</li>
+      </ul>
+    </div>
+
+    <div id="exercises"></div>
+
+    <div class="card">
+      <div class="ex-name">Cool-down</div>
+      <ul class="ex-sub">
+        <li>Light walking/bike 3–5 min</li>
+        <li>Stretch worked muscle groups 5–8 min</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="ex-name">Week Notes</div>
+      <textarea id="weekNotes" class="input" placeholder="Sleep, soreness, PRs, anything to remember for next week..."></textarea>
+    </div>
+  </main>
+
+  <footer class="install">
+    <div class="bar">
+      <div>Tip: Hit the top of a rep range for all sets with solid form → increase weight next session.</div>
+    </div>
+  </footer>
+
+  <script src="/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js');
+      });
+    }
+  </script>
+</body>
+</html>
