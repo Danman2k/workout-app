@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>RR Strength</title>
-  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#111111" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
   <style>
     :root { --bg:#f7f7f8; --card:#fff; --ink:#111; --muted:#6b7280; --border:#e5e7eb; }
     * { box-sizing: border-box; }
@@ -45,23 +45,23 @@
 <body>
   <header>
     <div class="container hpad">
-      <h1>Upper/Lower 4‑Day Strength & Hypertrophy</h1>
+      <h1>Upper/Lower 4-Day Strength & Hypertrophy</h1>
       <div class="muted">Progressive overload • Rest 2–3m compounds, 45–90s accessories</div>
       <div class="row" style="margin-top:8px;">
         <div class="row">
-          <button id="prevWeek" class="btn">−</button>
+          <button id="prevWeek" class="btn" type="button">−</button>
           <div id="weekLabel" class="btn" style="pointer-events:none;">Week 1</div>
-          <button id="nextWeek" class="btn">＋</button>
+          <button id="nextWeek" class="btn" type="button">＋</button>
         </div>
         <div class="grow"></div>
-        <button id="resetDay" class="btn">Reset day</button>
-        <button id="resetWeek" class="btn">Reset week</button>
+        <button id="resetDay" class="btn" type="button">Reset day</button>
+        <button id="resetWeek" class="btn" type="button">Reset week</button>
       </div>
       <div class="tabs">
-        <button class="tab active" data-tab="0">Day 1<br/>Upper (Push)</button>
-        <button class="tab" data-tab="1">Day 2<br/>Lower (Glute)</button>
-        <button class="tab" data-tab="2">Day 3<br/>Upper (Pull)</button>
-        <button class="tab" data-tab="3">Day 4<br/>Lower (Strength)</button>
+        <button class="tab active" data-tab="0" type="button">Day 1<br/>Upper (Push)</button>
+        <button class="tab" data-tab="1" type="button">Day 2<br/>Lower (Glute)</button>
+        <button class="tab" data-tab="2" type="button">Day 3<br/>Upper (Pull)</button>
+        <button class="tab" data-tab="3" type="button">Day 4<br/>Lower (Strength)</button>
       </div>
     </div>
   </header>
@@ -103,13 +103,14 @@
     </div>
   </footer>
 
-  <script src="/app.js"></script>
+  <script src="app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js');
+        navigator.serviceWorker.register('service-worker.js');
       });
     }
   </script>
+  <noscript>If you only see Warm-up/Cool-down/Notes, JavaScript failed to load.</noscript>
 </body>
 </html>
